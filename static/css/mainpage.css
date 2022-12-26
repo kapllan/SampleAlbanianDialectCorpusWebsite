@@ -1,0 +1,74 @@
+body {
+  font-family: Sans-serif;
+}
+
+/* All div corners rounded */
+div {
+  border-radius: 30px;
+}
+
+.search_div,
+div#canvas_container {
+  margin: 2px;
+  padding: 10px;
+}
+
+#corpus_results {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.meta_infos {
+  text-align: left;
+  color: grey;
+}
+.linguistic_example {
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+#search_and_results {
+  min-width: 100%;
+  flex-wrap: wrap;
+}
+
+#search_container {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 100%;
+  border: 1px solid black;
+}
+
+#start_search {
+  text-align: center;
+}
+
+.input_form_search {
+  border: 1px solid grey;
+  margin: 5px;
+}
+
+.bar_chart {
+  width: 100%;
+}
+
+/* map related */
+
+#main_div {
+  display: inline-flex;
+  width: 100%;
+}
+
+#map_container {
+  min-width: 40%;
+  max-width: 40%;
+  margin: 5px;
+}
+
+#map {
+  height: 700px;
+  width: 600px;
+}

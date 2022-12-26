@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Albanian Dialect Corpus</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/mainpage.css') }}"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/main.js') }}"
+      defer
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+  </head>
+  <datalist id="countries">
+    <option>Albania</option>
+    <option>Kosova</option>
+    <option>Montenegro</option>
+    <option>Macedonia</option>
+    <option>Serbia</option>
+    <option>Greece</option>
+  </datalist>
+
+  <datalist id="dialects">
+    <option>Northeast Gheg</option>
+    <option>Northwest Gheg</option>
+    <option>South Gheg</option>
+    <option>Central Gheg</option>
+    <option>North Tosk</option>
+    <option>South Tosk</option>
+    <option>Cham Tosk</option>
+  </datalist>
+  <datalist id="UPosTag">
+    <option>PUNCT</option>
+    <option>DET</option>
+    <option>PROPN</option>
+    <option>PRON</option>
+    <option>NOUN</option>
+    <option>VERB</option>
+    <option>PART</option>
+    <option>ADJ</option>
+    <option>ADV</option>
+    <option>CCONJ</option>
+    <option>ADP</option>
+    <option>SCONJ</option>
+    <option>INTJ</option>
+    <option>AUX</option>
+  </datalist>
+  <datalist id="XPosTag">
+    <option>?</option>
+    <option>Abbr</option>
+    <option>Adj</option>
+    <option>AdjNum</option>
+    <option>AdjPoss</option>
+    <option>Adv</option>
+    <option>ClPro</option>
+    <option>ClPro.ClPro</option>
+    <option>Conj</option>
+    <option>ConjCond</option>
+    <option>Det</option>
+    <option>FM</option>
+    <option>Int</option>
+    <option>Link</option>
+    <option>merged_form</option>
+    <option>N</option>
+    <option>NAdj</option>
+    <option>NAdjNum</option>
+    <option>NAdjPos</option>
+    <option>NProp</option>
+    <option>NPropAbb</option>
+    <option>NPrt</option>
+    <option>NTop</option>
+    <option>Num</option>
+    <option>Prep</option>
+    <option>Pro</option>
+    <option>ProRefl</option>
+    <option>ProRel</option>
+    <option>Pt</option>
+    <option>PtAbs</option>
+    <option>PtAffm</option>
+    <option>PtComp</option>
+    <option>PtFut</option>
+    <option>PtGer</option>
+    <option>PtInf</option>
+    <option>PtInt</option>
+    <option>PtIntf</option>
+    <option>PtJus</option>
+    <option>PtMod</option>
+    <option>PtNeg</option>
+    <option>PtPass</option>
+    <option>PtPriv</option>
+    <option>PtProg</option>
+    <option>PtSubj</option>
+    <option>PtSup</option>
+    <option>PtTemp</option>
+    <option>PtVoc</option>
+    <option>Punct</option>
+    <option>VAuxFin</option>
+    <option>VAuxInf</option>
+    <option>VFin</option>
+    <option>VInf</option>
+    <option>VModFin</option>
+    <option>VModInf</option>
+  </datalist>
+  <datalist id="main_sub">
+    <option>main</option>
+    <option>sub</option>
+  </datalist>
+  <datalist id="tense">
+    <option>?</option>
+    <option>?aor</option>
+    <option>?imperf</option>
+    <option>?pres</option>
+    <option>.1.pres</option>
+    <option>.aor</option>
+    <option>aor</option>
+    <option>aor?</option>
+    <option>imperf</option>
+    <option>other</option>
+    <option>pres</option>
+  </datalist>
+  <datalist id="person">
+    <option>?</option>
+    <option>?1</option>
+    <option>?2</option>
+    <option>?3</option>
+    <option>?6</option>
+    <option>.1.3.5</option>
+    <option>.1.5</option>
+    <option>.3</option>
+    <option>.3.3.5</option>
+    <option>.3.5</option>
+    <option>.4.6</option>
+    <option>.6.3.5</option>
+    <option>1</option>
+    <option>1.3</option>
+    <option>1.6</option>
+    <option>2</option>
+    <option>2.1</option>
+    <option>2.1.3</option>
+    <option>2.1.6</option>
+    <option>2.3</option>
+    <option>2.3.3</option>
+    <option>2.3.6</option>
+    <option>2.4</option>
+    <option>2.6</option>
+    <option>2.6.3</option>
+    <option>3</option>
+    <option>3.3</option>
+    <option>3.6</option>
+    <option>4</option>
+    <option>4.</option>
+    <option>4.3</option>
+    <option>5</option>
+    <option>5.3</option>
+    <option>5.3.3</option>
+    <option>6</option>
+    <option>6.</option>
+    <option>6.3</option>
+    <option>6.6</option>
+  </datalist>
+  <datalist id="number">
+    <option>_</option>
+    <option>pl</option>
+    <option>sg</option>
+  </datalist>
+  <datalist id="deprel">
+    <option>?</option>
+    <option>?acl</option>
+    <option>?advcl</option>
+    <option>?appos</option>
+    <option>?ccomp</option>
+    <option>?conj</option>
+    <option>?fixed</option>
+    <option>?mark</option>
+    <option>?nmod</option>
+    <option>?parataxis</option>
+    <option>?xcomp</option>
+    <option>acl</option>
+    <option>acl:rel</option>
+    <option>acl:relcl</option>
+    <option>advcl</option>
+    <option>advmod</option>
+    <option>advmod:emph</option>
+    <option>amod</option>
+    <option>appos</option>
+    <option>aux</option>
+    <option>c</option>
+    <option>case</option>
+    <option>cc</option>
+    <option>ccomp</option>
+    <option>comp</option>
+    <option>conj</option>
+    <option>cop</option>
+    <option>csubj</option>
+    <option>det</option>
+    <option>det:poss</option>
+    <option>discourse</option>
+    <option>expl</option>
+    <option>fixed</option>
+    <option>iobj</option>
+    <option>mark</option>
+    <option>mod</option>
+    <option>nmod</option>
+    <option>nmod:tmod</option>
+    <option>nsubj</option>
+    <option>nsubj:pass</option>
+    <option>nummod</option>
+    <option>obj</option>
+    <option>obl</option>
+    <option>obl:tmod</option>
+    <option>orphan:advmod</option>
+    <option>orphan:obj</option>
+    <option>orphan:obl</option>
+    <option>parataxis</option>
+    <option>punct</option>
+    <option>root</option>
+    <option>vocative</option>
+    <option>x</option>
+    <option>xcomp</option>
+  </datalist>
+  <body>
+    <h1>Albanian Dialect Corpus</h1>
+    <div id="main_div" name="main_div">
+      <div id="map_container">
+        <div id="map"></div>
+        <div id="canvas_container" name="canvas_container">
+          <div class="" bar_chart>
+            <canvas id="dialect_bar_chart" class="bar_chart"></canvas>
+          </div>
+          <div class="" bar_chart>
+            <canvas id="country_bar_chart" class="bar_chart"></canvas>
+          </div>
+          <div class="" bar_chart>
+            <canvas id="country_dialect_bar_chart" class="bar_chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <form method="POST" autocomplete="off" autocorrect="off" name="search_field" id="search_field">
+      <div id="search_and_results" name="search_and_results">
+        <div id="search_container" name="search_container">
+          <div id="lexcial_infos" name="lexcial_infos" class="search_div">
+            <h3>Lexical information</h3>
+            <p>
+              <input
+                type="text"
+                id="input_word_search"
+                name="input_word_search"
+                class="input_form_search"
+                placeholder="Search for a word ..."
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_lemma_search"
+                name="input_lemma_search"
+                class="input_form_search"
+                placeholder="Search for a lemma ..."
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_upostag_search"
+                list="UPosTag"
+                name="input_upostag_search"
+                class="input_form_search"
+                placeholder="Search for a UPosTag ..."
+                multiple
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_xpostag_search"
+                list="XPosTag"
+                name="input_xpostag_search"
+                class="input_form_search"
+                placeholder="Search for a XPosTag ..."
+                multiple
+              />
+            </p>
+          </div>
+          <div
+            id="grammatical_infos"
+            name="grammatical_infos"
+            class="search_div"
+          >
+            <h3>Grammatical information</h3>
+            <p>
+              <input
+                type="text"
+                id="input_case_search"
+                name="input_case_search"
+                class="input_form_search"
+                placeholder="Search for case ..."
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_tense_search"
+                name="input_tense_search"
+                class="input_form_search"
+                placeholder="Search for tense ..."
+                list="tense"
+                multiple
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_number_search"
+                list="number"
+                name="input_number_search"
+                class="input_form_search"
+                placeholder="Search for number ..."
+                multiple
+              />
+            </p>
+          </div>
+          <div id="syntactic_infos" name="syntactic_infos" class="search_div">
+            <h3>Syntactic information</h3>
+            <p>
+              <input
+                type="text"
+                id="input_basic_word_order_search"
+                name="input_basic_word_order_search"
+                class="input_form_search"
+                placeholder="Search for a basic word order ..."
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_deprel_search"
+                name="input_deprel_search"
+                list="deprel"
+                class="input_form_search"
+                placeholder="Search for dependency relations ..."
+                multiple
+              />
+            </p>
+            <p>
+              <input
+                type="text"
+                id="input_main_sub_search"
+                name="input_main_sub_search"
+                class="input_form_search"
+                placeholder="Search for main or subordinate clauses ..."
+                list="main_sub"
+                multiple
+              />
+            </p>
+          </div>
+          <div id="dialect_infos" name="dialect_infos" class="search_div">
+            <h3>Dialect information</h3>
+            <p>
+              <input
+                type="text"
+                list="dialects"
+                name="input_dialect_search"
+                class="input_form_search"
+                placeholder="Search for a dialect ..."
+                multiple
+              />
+            </p>
+          </div>
+          <div id="geo_infos" name="geo_infos" class="search_div">
+            <h3>Geographical information</h3>
+            <p>
+              <input
+                type="text"
+                list="countries"
+                id="input_country_search"
+                name="input_country_search"
+                class="input_form_search"
+                placeholder="Search for a country ..."
+                multiple
+              />
+            </p>
+      </form>
+          </div>
+    </div>
+    <div id="start_search" name="start_search">
+      <input type="submit" value="Search!" id="start_search" name="start_search"/>
+      <input type="submit" value="Reset" id="reset" name="reset" />
+    </div>
+      <div id="result_container">
+        <div id="corpus_results">
+          <h2 id="table_header_results" style="text-align: center"></h2>
+          <div id="example_container" name="example_container"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
